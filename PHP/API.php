@@ -114,7 +114,7 @@ if ($_POST['action'] == 'sent')
 		return;
 	}
 
-	$subject = $info['group'] . ' ' . $info['name1'] . ' ' . mb_substr($info[name2], 0, 1,'utf-8') . '.' . mb_substr($info[name3], 0, 1,'utf-8') . '.';
+	$subject = $info['group'] . ' ' . $info['name1'] . ' ' . mb_substr($info[name2], 0, 1,'utf-8') . '. ' . mb_substr($info[name3], 0, 1,'utf-8') . '. ';
 	if ($info['lab'] < 9) $subject = $subject . 'Лабораторная работа №' . $info['lab'];
 	if ($info['lab'] == 9) $subject = $subject . 'Курсовое проектирование';
 
@@ -178,7 +178,9 @@ if ($_POST['action'] == 'save')
 	$name = $_POST['name1'] . ' ' . mb_substr($_POST['name2'], 0, 1,'utf-8') . '.' . mb_substr($_POST['name3'], 0, 1,'utf-8') . '.'; // название папки пользователя
 	mkdir($tempdir); // создание новой дериктории
 	mkdir($tempdir . '/' . $name , 0755, true); // создание папки пользователя
-
+	$name = $name . '/Лабораторная работа №' . $_POST['lab'];
+	mkdir($tempdir . '/' . $name, 0755, true); // создание папки лабораторной
+	
   
     $filesCount = 0;
 	if ($_POST['copyID'] != '' && array_key_exists('copyFiles', $_POST) && count($_POST['copyFiles']['name']) > 0)
@@ -377,7 +379,7 @@ function random($length = 32)
 function foldername($id)
 {
 	$info = json_decode(file_get_contents(__DIR__ . '/../../user_data/' . $id . '/' . 'info') , true);
-	return $info['name1'] . ' ' . mb_substr($info['name2'], 0, 1,'utf-8') . '.' . mb_substr($info['name3'], 0, 1,'utf-8') . '.';
+	return $info['name1'] . ' ' . mb_substr($info['name2'], 0, 1,'utf-8') . '.' . mb_substr($info['name3'], 0, 1,'utf-8') . './Лабораторная работа №' . $info['lab'];
 }
 
 ?>
