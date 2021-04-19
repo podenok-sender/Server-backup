@@ -114,7 +114,7 @@ if ($_POST['action'] == 'sent')
 		return;
 	}
 
-	$subject = $info['group'] . ' ' . $info['name1'] . ' ' . mb_substr($info[name2], 0, 1,'utf-8') . '. ' . mb_substr($info[name3], 0, 1,'utf-8') . '. ';
+	$subject = $info['group'] . ' ' . $info['name1'] . ' ' . mb_substr($info[name2], 0, 1,'utf-8') . '.' . mb_substr($info[name3], 0, 1,'utf-8') . '. ';
 	if ($info['lab'] < 9) $subject = $subject . 'Лабораторная работа №' . $info['lab'];
 	if ($info['lab'] == 9) $subject = $subject . 'Курсовое проектирование';
 
