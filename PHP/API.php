@@ -314,7 +314,7 @@ if ($_POST['action'] == 'download')
 	header('Content-Length: ' . filesize($file));
 	readfile($file);
 	if ($_POST['tar'] != 'true')
-	deldir($path. '/'. mb_substr($foldername, 0, -24,'utf-8'));
+	deldir($path. '/'. mb_substr($foldername, 0, -23,'utf-8'));// 23 - длина "Лабораторная работа №1"
     return;
 }
  
