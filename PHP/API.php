@@ -114,7 +114,7 @@ if ($_POST['action'] == 'sent')
 		return;
 	}
 
-	$subject = $info['group'] . ' ' . $info['name1'] . ' ' . mb_substr($info[name2], 0, 1,'utf-8') . '. ' . mb_substr($info[name3], 0, 1,'utf-8') . '. ';
+	$subject = $info['group'] . ' ' . $info['name1'] . ' ' . mb_substr($info[name2], 0, 1,'utf-8') . '.' . mb_substr($info[name3], 0, 1,'utf-8') . '.';
 	if ($info['lab'] < 9) $subject = $subject . 'Лабораторная работа №' . $info['lab'];
 	if ($info['lab'] == 9) $subject = $subject . 'Курсовое проектирование';
 
@@ -175,7 +175,7 @@ if ($_POST['action'] == 'save')
 
 	$id = random(); // создание новой лабораторной
 	$tempdir = $path . $id;
-	$name = $_POST['name1'] . ' ' . mb_substr($_POST['name2'], 0, 1,'utf-8') . '. ' . mb_substr($_POST['name3'], 0, 1,'utf-8') . '.'; // название папки пользователя
+	$name = $_POST['name1'] . ' ' . mb_substr($_POST['name2'], 0, 1,'utf-8') . '.' . mb_substr($_POST['name3'], 0, 1,'utf-8') . '.'; // название папки пользователя
 	mkdir($tempdir); // создание новой дериктории
 	mkdir($tempdir . '/' . $name , 0755, true); // создание папки пользователя
 
@@ -287,7 +287,6 @@ if ($_POST['action'] == 'download')
 		}
 		
 		$info = json_decode(file_get_contents($path . 'info') , true);
-		//$foldername = $info[name1] . ' ' . mb_substr($info[name2], 0, 1) . '. ' . mb_substr($info[name3], 0, 1) . '.'; // название папки (ФИО пользователя)
 		$foldername = foldername($_POST['id']);
 		shell_exec('cd "'.$path.'"; tar -xf archive.tar.gz "'.$foldername.'/'.$_POST['file'].'"');
 		$file =  $path. '/'. $foldername.'/'. $_POST['file']; // путь к искомому файлу
@@ -378,7 +377,7 @@ function random($length = 32)
 function foldername($id)
 {
 	$info = json_decode(file_get_contents(__DIR__ . '/../../user_data/' . $id . '/' . 'info') , true);
-	return $info['name1'] . ' ' . mb_substr($info['name2'], 0, 1,'utf-8') . '. ' . mb_substr($info['name3'], 0, 1,'utf-8') . '.';
+	return $info['name1'] . ' ' . mb_substr($info['name2'], 0, 1,'utf-8') . '.' . mb_substr($info['name3'], 0, 1,'utf-8') . '.';
 }
 
 ?>
