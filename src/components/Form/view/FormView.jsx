@@ -100,7 +100,7 @@ export const FormView = props => {
                         className={classes.gridItem}
                         variant="contained"
                         color="primary">
-                        Import
+                        Импортировать
                     </Button>
                 </Grid>
                 <Grid item xs={12}>
@@ -112,7 +112,7 @@ export const FormView = props => {
                         onChange={e => {
                             handleChange(
                                 e,
-                                /(^[ЁА-Я]{1}[ёа-я]{0,}-{0,1}[ЁА-Я]{1}[ёа-я]{0,}$)/,
+                                /(^[ЁА-Я]{1}[ёа-я]{0,}-[ЁА-Я]{1}[ёа-я]{0,}$)|(^[ЁА-Я]{1}[ёа-я]{1,}$)/,
                                 'Фамилия может содержать только кириллицу и один дефис',
                                 []
                             )

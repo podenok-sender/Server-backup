@@ -2,6 +2,7 @@ import { FormView } from './view/FormView'
 import { ajax } from 'jquery'
 import { useForm } from '../../hooks/useForm'
 import { useState } from 'react'
+import env from "react-dotenv";
 
 export const Form = () => {
     const { values, setValues, handleChange } = useForm({
@@ -52,7 +53,7 @@ export const Form = () => {
             console.log('info')
             ajax({
                 type: 'POST',
-                url: 'PHP/API.php',
+                url: env.API_URL || 'PHP/API.php',
                 charset: 'utf-8',
                 data: {
                     action: 'info',
@@ -108,7 +109,7 @@ export const Form = () => {
         setProgress(true)
         console.log('download')
         ajax({
-            url: 'PHP/API.php',
+            url: env.API_URL || 'PHP/API.php',
             type: 'POST',
             dataType: 'binary',
             xhrFields: {
@@ -175,7 +176,7 @@ export const Form = () => {
 
         ajax({
             type: 'POST',
-            url: 'PHP/API.php',
+            url: env.API_URL || 'PHP/API.php',
             charset: 'utf-8',
             data: formData,
             processData: false,
@@ -210,7 +211,7 @@ export const Form = () => {
         console.log('send', code)
         ajax({
             type: 'POST',
-            url: 'PHP/API.php',
+            url: env.API_URL || 'PHP/API.php',
             charset: 'utf-8',
             data: {
                 action: 'sent',

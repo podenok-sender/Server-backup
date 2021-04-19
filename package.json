@@ -17,8 +17,8 @@
         "web-vitals": "^1.1.1"
     },
     "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
+        "start": "react-dotenv && react-scripts start",
+        "build": "react-dotenv && react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },
@@ -40,5 +40,13 @@
             "last 1 safari version"
         ]
     },
-    "homepage": "./"
+    "homepage": "./",
+    "react-dotenv": {
+        "whitelist": [
+            "API_URL"
+        ]
+    },
+    "devDependencies": {
+        "react-dotenv": "^0.1.3"
+    }
 }
