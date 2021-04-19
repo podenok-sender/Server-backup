@@ -178,8 +178,8 @@ if ($_POST['action'] == 'save')
 	$name = $_POST['name1'] . ' ' . mb_substr($_POST['name2'], 0, 1,'utf-8') . '.' . mb_substr($_POST['name3'], 0, 1,'utf-8') . '.'; // название папки пользователя
 	mkdir($tempdir); // создание новой дериктории
 	mkdir($tempdir . '/' . $name , 0755, true); // создание папки пользователя
-	$name = $name . '/Лабораторная работа №' . $_POST['lab'];
-	mkdir($tempdir . '/' . $name, 0755, true); // создание папки лабораторной
+	$nameLab = $name . '/Лабораторная работа №' . $_POST['lab'];
+	mkdir($tempdir . '/' . $nameLab, 0755, true); // создание папки лабораторной
 	
   
     $filesCount = 0;
@@ -188,7 +188,7 @@ if ($_POST['action'] == 'save')
 		$copypath = $path . $_POST['copyID'] . '/' . foldername($_POST['copyID']);
         shell_exec('cd "'.$path . $_POST['copyID'].'"; tar -xf archive.tar.gz');
 		for ($i = 0;$i < count($_POST['copyFiles']['name']);$i++) {
-		    if (copy($copypath . '/' . $_POST['copyFiles']['name'][$i], $tempdir . '/' . $name .'/'. $_POST['copyFiles']['name'][$i])){
+		    if (copy($copypath . '/' . $_POST['copyFiles']['name'][$i], $tempdir . '/' . $nameLab .'/'. $_POST['copyFiles']['name'][$i])){
 		        $info['files']['name'][$filesCount] = $_POST['copyFiles']['name'][$i];
 		        $filesCount++;
 		    }
@@ -209,7 +209,7 @@ if ($_POST['action'] == 'save')
 	if (array_key_exists('uploaded', $_FILES))
  	for ( $i = 0; $i < count($_FILES['uploaded']['name']); $i++){
 	    $totalSize += $_FILES['uploaded']['size'][$i];
-		if (move_uploaded_file ( $_FILES['uploaded']['tmp_name'][$i] ,  $tempdir . '/' . $name.'/'.$_FILES['uploaded']['name'][$i])){
+		if (move_uploaded_file ( $_FILES['uploaded']['tmp_name'][$i] ,  $tempdir . '/' . $nameLab.'/'.$_FILES['uploaded']['name'][$i])){
 				$info['files']['name'][$filesCount] = $_FILES['uploaded']['name'][$i];
 		        $filesCount++;
 		}
@@ -231,7 +231,7 @@ if ($_POST['action'] == 'save')
 	    return;
     }
 
-    $val = shell_exec('cd "'.$tempdir . '/" ; tar -caf  "archive.tar.gz" "' . $name . '"');
+    $val = shell_exec('cd "'.$tempdir . '/" ; tar -caf  "archive.tar.gz" "' . $nameLab . '"');
 
     if ($val != ''){
         deldir($tempdir);
@@ -314,7 +314,7 @@ if ($_POST['action'] == 'download')
 	header('Content-Length: ' . filesize($file));
 	readfile($file);
 	if ($_POST['tar'] != 'true')
-	deldir($path. '/'. $foldername);
+	deldir($path. '/'. mb_substr($foldername, 0, -24,'utf-8'));
     return;
 }
  
