@@ -3,6 +3,8 @@ import { ThemeProvider } from '@material-ui/styles'
 import { Background } from './components/Background/Background'
 import { Form } from './components/Form/Form'
 
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
+
 const theme = createMuiTheme({
     palette: {
         // type: 'dark',
@@ -18,7 +20,14 @@ const App = () => {
     return (
         <ThemeProvider theme={theme}>
             <Background />
-            <Form></Form>
+            <BrowserRouter>
+                <Switch>
+                    <Route exact path={['/', '/:id']} component={Form}></Route>
+                    <Route exact path="*">
+                        404
+                    </Route>
+                </Switch>
+            </BrowserRouter>
         </ThemeProvider>
     )
 }

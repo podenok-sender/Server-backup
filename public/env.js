@@ -1,3 +1,3 @@
 window.env = {
-  "API_URL": "https://bsuir.lab.bhuser.ru/PHP/API.php"
+  "API_URL": "http://a0534552.xsph.ru/PHP/API.php"
 };

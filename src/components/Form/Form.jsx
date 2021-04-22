@@ -1,13 +1,32 @@
 import { FormView } from './view/FormView'
 import { ajax } from 'jquery'
 import { useForm } from '../../hooks/useForm'
-import { useState } from 'react'
-import env from "react-dotenv";
+import { useEffect, useState } from 'react'
+import env from "react-dotenv"
+import { useHistory, useParams } from 'react-router'
 
 export const Form = () => {
+    const regExps = {
+        code: /^[a-zA-Z0-9]{32}$/,
+        name1: /(^[ЁА-Я]{1}[ёа-я]{0,}-[ЁА-Я]{1}[ёа-я]{0,}$)|(^[ЁА-Я]{1}[ёа-я]{1,}$)/,
+        name23: /^[ЁА-Я]{1}[ёа-я]{1,}$/,
+        group: /^[0-9]{2}[0-8]{1}[0-9]{1}[013456789]{1}[0-9]$/
+    }
+
+    const { id } = useParams()
+    const history = useHistory()
+
+    useEffect(() => {
+        if (id && !regExps.code.test(id)) {
+            history.replace('')
+        } else if (id) {
+            handleInfo()
+        }
+    }, [])
+
     const { values, setValues, handleChange } = useForm({
         code: {
-            value: '',
+            value: id && regExps.code.test(id) ? id : '',
             error: null
         },
         name1: {
@@ -94,7 +113,13 @@ export const Form = () => {
                             }))
                         )
                     } else {
-                        alert(data.message)
+                        history.replace('')
+                        setValues({
+                            ...values,
+                            code: {
+                                value: ''
+                            }
+                        })
                     }
                 },
                 error: function (request, textStatus, errorThrown) {
@@ -185,7 +210,7 @@ export const Form = () => {
                 setProgress(false)
                 if (data.OK) {
                     if (data.id) {
-                        console.log(data)
+                        history.replace(data.id)
                         setCode(data.id)
                         setValues({
                             ...values,
@@ -242,6 +267,7 @@ export const Form = () => {
             handleDownload={handleDownload}
             handleSave={handleSave}
             handleSend={handleSend}
-            progress={progress}></FormView>
+            progress={progress}
+            regExps={regExps}></FormView>
     )
 }

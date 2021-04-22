@@ -43,7 +43,6 @@ export const FormView = props => {
     const {
         code,
         values,
-        disabled,
         handleChange,
         files,
         setFiles,
@@ -51,8 +50,11 @@ export const FormView = props => {
         handleDownload,
         handleSave,
         handleSend,
-        progress
+        progress,
+        regExps
     } = props
+
+    const disabled = props.disabled || values.code.error
 
     return (
         <form>
@@ -72,7 +74,7 @@ export const FormView = props => {
                         helperText={values.code.error}
                         value={values.code.value}
                         onChange={e => {
-                            handleChange(e, /^[a-zA-Z0-9]{32}$/, 'Некорректный код', [''])
+                            handleChange(e, regExps.code, 'Некорректный код', [''])
                         }}
                         className={classes.gridItem}
                         id="outlined-basic"
@@ -95,7 +97,7 @@ export const FormView = props => {
                 </Grid>
                 <Grid item xs={12}>
                     <Button
-                        disabled={Boolean(values.code.error) || values.code.value === ''}
+                        disabled={values.code.error || values.code.value === ''}
                         onClick={handleInfo}
                         className={classes.gridItem}
                         variant="contained"
@@ -112,7 +114,7 @@ export const FormView = props => {
                         onChange={e => {
                             handleChange(
                                 e,
-                                /(^[ЁА-Я]{1}[ёа-я]{0,}-[ЁА-Я]{1}[ёа-я]{0,}$)|(^[ЁА-Я]{1}[ёа-я]{1,}$)/,
+                                regExps.name1,
                                 'Фамилия может содержать только кириллицу и один дефис',
                                 []
                             )
@@ -133,7 +135,7 @@ export const FormView = props => {
                         onChange={e => {
                             handleChange(
                                 e,
-                                /^[ЁА-Я]{1}[ёа-я]{1,}$/,
+                                regExps.name23,
                                 'Имя может содержать только кириллицу',
                                 []
                             )
@@ -154,7 +156,7 @@ export const FormView = props => {
                         onChange={e => {
                             handleChange(
                                 e,
-                                /^[ЁА-Я]{1}[ёа-я]{1,}$/,
+                                regExps.name23,
                                 'Отчество может содержать только кириллицу',
                                 []
                             )
@@ -204,7 +206,7 @@ export const FormView = props => {
                         onChange={e => {
                             handleChange(
                                 e,
-                                /^[0-9]{2}[0-8]{1}[0-9]{1}[013456789]{1}[0-9]$/,
+                                regExps.group,
                                 'Некорректный номер группы',
                                 []
                             )
